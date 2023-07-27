@@ -28,3 +28,14 @@ install_gsutil()
 set_hostname
 install_docker
 install_gsutil
+
+GSUTIL=/home/vagrant/google-cloud-sdk/bin/gsutil
+
+$GSUTIL cp -r gs://alloydb-omni-install/`$GSUTIL cat gs://alloydb-omni-install/latest` .
+
+cd `$GSUTIL cat gs://alloydb-omni-install/latest`
+tar -xzf alloydb_omni_installer.tar.gz && cd installer
+bash install_alloydb.sh
+mkdir /root/alloydb-data
+sed -i "s|^\(DATADIR_PATH=\).*|\1/root/alloydb-data|" /var/alloydb/config/dataplane.conf
+systemctl start alloydb-dataplane
