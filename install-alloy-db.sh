@@ -39,4 +39,8 @@ tar -xzf alloydb_omni_installer.tar.gz && cd installer
 bash install_alloydb.sh
 mkdir /root/alloydb-data
 sed -i "s|^\(DATADIR_PATH=\).*|\1/root/alloydb-data|" /var/alloydb/config/dataplane.conf
+echo "host    all             all             192.168.0.0/16        trust"  >> /var/alloydb/config/pg_hba.conf
 systemctl start alloydb-dataplane
+
+echo -n "Machine IP <ALLOY>: "
+ip add | grep "192.168"

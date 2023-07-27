@@ -27,3 +27,10 @@ apt update
 # Install the latest version of PostgreSQL.
 # If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
 apt -y install postgresql-14
+
+echo "listen_addresses = '0.0.0.0'" >> /etc/postgresql/14/main/postgresql.conf
+echo "host    all             all             192.168.0.0/16        trust"  >>  /etc/postgresql/14/main/pg_hba.conf
+systemctl restart postgresql
+
+echo -n "Machine IP <POSTGRES>: "
+ip add | grep "192.168"
